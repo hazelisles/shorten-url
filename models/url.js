@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const urlData = new Schema({
+const urlSchema = new Schema({
   url: {
     type: String,
     required: true
@@ -11,4 +11,4 @@ const urlData = new Schema({
   }
 })
 
-module.exports = mongoose.model(urlData)
+module.exports = mongoose.model('urlData', urlSchema)

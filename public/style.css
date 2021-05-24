@@ -11,6 +11,10 @@
   padding: 5px;
 }
 
+.link:hover {
+  cursor: pointer;
+}
+
 .big {
   font-size: 2em;
   border-radius: 30px;

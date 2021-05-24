@@ -4,9 +4,15 @@
       <img
       src="https://images.unsplash.com/photo-1606926693780-ec99c3f747f3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="..." width="50%" class="rounded-3">    
   </div>
-  <form action="/" method="post">
+  {{#if data}}
+  <div class="my-2 col-10 mx-auto big justify-content-center row">
+    <div class="text-center"> 你的短網址如下：</div>
+    <a href='{{data.url_short}}' class="text-center">{{data.url_short}}</a>
+  </div>
+  {{/if}}
+  <form action="/shorten" method="post">
   <div class="my-3 col-10 col-md-8 col-lg-7 mx-auto row justify-content-center">
-    <input class="form-control form-control-lg" type="text" name="url" placeholder="http://">
+    <input class="form-control form-control-lg" type="text" name="url" placeholder="http://" required>
     <button class="btn btn-primary col-3 mt-2" type="submit">Shorten</button>   
   </div>
   </form>

@@ -13,17 +13,42 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  console.log(randomCode())
   res.render('index')
 })
 
-app.post('/', (req, res) => {
+app.post('/shorten', async (req, res) => {
+  const existData = await urlData.find().lean()
   const { url } = req.body
-  res.render('index')
+  const check1 = existData.find(s => s.url === url)
+  if (check1) {
+    return res.render('index', { data: check1 })
+  } else {
+    let check = true
+    let code = randomCode()
+    while (check) {
+      const check2 = existData.some(s => s.url_short.substr(s.url_short.length-5, 5) === code)
+      if (check2) {
+        code = randomCode()
+      } else if (!check2) {
+        check = false
+      }
+    }
+    const short = {url_short: `http://localhost:3000/${code}`}
+    const data = Object.assign({}, req.body, short)
+    urlData.create(data)
+    return res.render('index', { data })
+  } 
 })
 
-app.get('縮網址/:code', (req, res) => {
-  搜尋對應資料庫_id導引回原網址
+app.get('/:code', async (req, res) => {
+  const { code } = req.params
+  const target = await urlData.find({ "url_short" : { $regex : new RegExp(`${code}` + '$') }}).lean()
+  if (target.length === 0) {
+    return res.redirect('/')
+  } else {
+    const { url } = target[0]
+    return res.redirect(`${url}`)
+  }  
 })
 
 app.listen(PORT, (req, res) => {

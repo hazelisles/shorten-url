@@ -11,6 +11,8 @@
   padding: 5px;
 }
 
-.oline {
-  outline: red 2px solid;
+.big {
+  font-size: 2em;
+  border-radius: 30px;
+  background-color: rgba(211, 211, 211, 0.5);
 }

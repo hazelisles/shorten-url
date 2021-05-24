@@ -7,7 +7,12 @@
   {{#if data}}
   <div class="my-2 col-10 mx-auto big justify-content-center row">
     <div class="text-center"> 你的短網址如下：</div>
-    <a href='{{data.url_short}}' class="text-center">{{data.url_short}}</a>
+    <div class="align-items-center justify-content-center row">
+      <a href='{{data.url_short}}' class="text-center" data-bs-toggle="tooltip" title="link to page"><input type="text" value="{{data.url_short}}" id="tinyurl" class="link" size="27"></a>
+      <button onclick="copyText()" class="btn btn-outline-primary my-2 col-3">Copy URL</button>
+    </div>
+    
+    
   </div>
   {{/if}}
   <form action="/shorten" method="post">

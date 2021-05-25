@@ -9,6 +9,6 @@ const urlSchema = new Schema({
     type: String,
     required: true
   }
-}, { bufferCommands: false })
+})
 
 module.exports = mongoose.model('urlData', urlSchema)

@@ -2,9 +2,12 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
 const exphbs = require('express-handlebars')
+
+require('./config/mongoose')
+
 const urlData = require('./models/url')
 const randomCode = require('./helpers/randomCode')
-require('./config/mongoose')
+
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')

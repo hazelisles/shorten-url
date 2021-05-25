@@ -2,7 +2,8 @@
 一個發布於Heroku的縮短攏長網址的網頁應用程式。
 
 可由以下專案連結進入網頁試用
-專案連結：短網址產生器(https://young-dawn-29170.herokuapp.com/)
+
+專案連結：[短網址產生器](https://young-dawn-29170.herokuapp.com/)
 
 ## 專案畫面
 <h4> 專案首頁 </h4>
@@ -27,9 +28,13 @@ npm install
 npm i nodemon
 ```
 4. 修改短網址設定
+
 目前網址設定為發布於個人Heroku專用
+
 需修改app.js檔案內
+
 `https://young-dawn-29170.herokuapp.com/` => `http://localhost:3000`
+
 儲存後，便可於本地伺服器使用
 
 5. 啟動伺服器，執行專案

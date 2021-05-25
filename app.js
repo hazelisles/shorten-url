@@ -17,38 +17,46 @@ app.get('/', (req, res) => {
 })
 
 app.post('/shorten', async (req, res) => {
-  const existData = await urlData.find().lean()
-  const { url } = req.body
-  const check1 = existData.find(s => s.url === url)
-  if (check1) {
-    return res.render('index', { data: check1 })
-  } else {
-    let check = true
-    let code = randomCode()
-    while (check) {
-      const check2 = existData.some(s => s.url_short.substr(s.url_short.length-5, 5) === code)
-      if (check2) {
-        code = randomCode()
-      } else if (!check2) {
-        check = false
+  try {
+    const existData = await urlData.find().lean()
+    const { url } = req.body
+    const check1 = existData.find(s => s.url === url)
+    if (check1) {
+      return res.render('index', { data: check1 })
+    } else {
+      let check = true
+      let code = randomCode()
+      while (check) {
+        const check2 = existData.some(s => s.url_short.substr(s.url_short.length-5, 5) === code)
+        if (check2) {
+          code = randomCode()
+        } else if (!check2) {
+          check = false
+        }
       }
+      const short = {url_short: `https://young-dawn-29170.herokuapp.com/${code}`}
+      const data = Object.assign({}, req.body, short)
+      urlData.create(data)
+      return res.render('index', { data })
     }
-    const short = {url_short: `https://young-dawn-29170.herokuapp.com/${code}`}
-    const data = Object.assign({}, req.body, short)
-    urlData.create(data)
-    return res.render('index', { data })
-  } 
+  } catch (error) {
+    console.log('Catch an error: ', error)
+  }
 })
 
 app.get('/:code', async (req, res) => {
-  const { code } = req.params
-  const target = await urlData.find({ "url_short" : { $regex : new RegExp(`${code}` + '$') }}).lean()
-  if (target.length === 0) {
-    return res.redirect('/')
-  } else {
-    const { url } = target[0]
-    return res.redirect(`${url}`)
-  }  
+  try {
+    const { code } = req.params
+    const target = await urlData.find({ "url_short" : { $regex : new RegExp(`${code}` + '$') }}).lean()
+    if (target.length === 0) {
+      return res.redirect('/')
+    } else {
+      const { url } = target[0]
+      return res.redirect(`${url}`)
+    }
+  } catch (error) {
+    console.log('Catch an error: ', error)
+  } 
 })
 
 app.listen(PORT, (req, res) => {

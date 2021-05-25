@@ -33,7 +33,7 @@ app.post('/shorten', async (req, res) => {
         check = false
       }
     }
-    const short = {url_short: `http://localhost:3000/${code}`}
+    const short = {url_short: `https://young-dawn-29170.herokuapp.com/${code}`}
     const data = Object.assign({}, req.body, short)
     urlData.create(data)
     return res.render('index', { data })
